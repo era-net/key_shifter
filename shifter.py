@@ -43,7 +43,7 @@ def load_song(file: str) -> list:
         
         return song_object
 
-def shift_chord(chord: str, shift: int):
+def transpose_chord(chord: str, shift: int):
     chords = ["C","C*","D","D*","E","F","F*","G","G*","A","A*","H"]
     if "*" in chord:
         rel_chords = []
@@ -78,15 +78,15 @@ def shift_chord(chord: str, shift: int):
         else:
             return rel_chords[shift]
         
-def shift_song(file: str, shift: int):
+def transpose_song(file: str, shift: int):
     song = load_song(file)
-    for i, section in enumerate(song):
+    for _, section in enumerate(song):
         for item in section:
             chords = item[0].split(" ")
             chord_str = ""
             for chord in chords:
                 if chord != "":
-                    chord_str += shift_chord(chord, shift)
+                    chord_str += transpose_chord(chord, shift)
                 else:
                     chord_str += " "
             item[0] = chord_str
@@ -96,5 +96,3 @@ def shift_song(file: str, shift: int):
         for item in section:
             print(item[0])
             print(item[1])
-
-shift_song("house_of_the_rising_sun", -5)
